@@ -1,0 +1,77 @@
+generator clien {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("POSTGRES_URL")
+}
+
+model Profile {
+    id        String   @id @default(uuid())
+    userId    String   @unique
+    name      String
+    email     String   @db.Text()
+    imageUrl  String   @db.Text()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    serverId  String
+    server    Server[]
+    member    Member[]
+    Chanel    Chanel[]
+}
+
+model Server {
+    id         String  @id @default(uuid())
+    name       String
+    imageUrl   String  @db.Text()
+    inviteCode String  @db.Text()
+    profileId  String
+    profile    Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    Member    Member[]
+    Chanel    Chanel[]
+
+    @@index([profileId])
+}
+
+model Member {
+    id        String     @id @default(uuid())
+    role      MemberRole @default(GUEST)
+    profileId String
+    profile   Profile    @relation(fields: [profileId], references: [id], onDelete: Cascade)
+    serverId  String
+    server    Server     @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([profileId])
+    @@index([serverId])
+}
+
+model Chanel {
+    id        String     @id @default(uuid())
+    name      String
+    type      ChanelType @default(TEXT)
+    profileId String
+    profile   Profile    @relation(fields: [profileId], references: [id], onDelete: Cascade)
+    serverId  String
+    server    Server     @relation(fields: [serverId], references: [id], onDelete: Cascade)
+    createdAt DateTime   @default(now())
+    updatedAt DateTime   @updatedAt
+}
+
+enum MemberRole {
+    ADMIN
+    MODERATOR
+    GUEST
+}
+
+enum ChanelType {
+    TEXT
+    AUDIO
+    VIDEO
+}
