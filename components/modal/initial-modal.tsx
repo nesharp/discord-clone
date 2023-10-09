@@ -2,8 +2,8 @@
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormProvider, useForm } from 'react-hook-form'
-import { Button } from '../ui/button'
-import { Input } from '../ui/input'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { FileUpload } from '@/components/file-upload'
 import axios from 'axios'
 import {
@@ -20,7 +20,7 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-} from '../ui/form'
+} from '@/components/ui/form'
 import React from 'react'
 import { useRouter } from 'next/navigation'
 const formSchema = z.object({
