@@ -30,9 +30,6 @@ export default function RootLayout({
                         enableSystem={false}
                         storageKey="discodo-theme"
                     >
-                        <header className="h-20 w-full bg-red-300">
-                            <ModeToggle />
-                        </header>
                         {children}
                     </ThemeProvider>
                 </ClerkProvider>
