@@ -3,8 +3,13 @@ generator clien {
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("POSTGRES_URL")
+
+  provider = "postgresql"
+
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+
 }
 
 model Profile {
@@ -15,7 +20,7 @@ model Profile {
     imageUrl  String   @db.Text()
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    serverId  String
+    serverId  String?
     server    Server[]
     member    Member[]
     Chanel    Chanel[]
@@ -31,8 +36,8 @@ model Server {
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    Member    Member[]
-    Chanel    Chanel[]
+    members    Member[]
+    chanels    Chanel[]
 
     @@index([profileId])
 }
