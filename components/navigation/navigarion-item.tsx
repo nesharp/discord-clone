@@ -3,19 +3,23 @@ import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { ActionTooltip } from '@/components/ui/action-tooltip'
-import { classNames } from 'uploadthing/client'
+import { useEffect, useState } from 'react'
 interface NavigationItemProps {
     id: string
     imageUrl: string
     name: string
 }
 export const NavigationItem = ({ id, imageUrl, name }: NavigationItemProps) => {
+    const [isMounted, setIsMounted] = useState(false)
+    useEffect(() => {
+        setIsMounted(true)
+    }, [])
     const params = useParams()
     const router = useRouter()
     const onClick = () => {
         router.push(`/servers/${id}`)
     }
-    console.log(params)
+    if (!isMounted) return null
     return (
         <ActionTooltip side="right" align="center" label={name}>
             <button

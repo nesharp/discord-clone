@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/components/providers/theme-provider'
 import { cn } from '@/lib/utils'
 import * as React from 'react'
 import { ModeToggle } from '@/components/mode-toggle'
+import { ModalProvider } from '@/components/providers/modal-profider'
 const openSans = Open_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -30,6 +31,7 @@ export default function RootLayout({
                         enableSystem={false}
                         storageKey="discodo-theme"
                     >
+                        <ModalProvider />
                         {children}
                     </ThemeProvider>
                 </ClerkProvider>
