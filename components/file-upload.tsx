@@ -10,7 +10,6 @@ interface FileUploadProps {
 }
 export const FileUpload = ({ endpoint, onChange, value }: FileUploadProps) => {
     const fileType = value?.split('.').pop()
-    console.log(value, fileType)
     if (value && fileType !== 'pdf') {
         return (
             <div className="h-20 w-20 relative mx-auto">
