@@ -6,11 +6,11 @@ import { ThemeProvider } from '@/components/providers/theme-provider'
 import { cn } from '@/lib/utils'
 import * as React from 'react'
 import { ModeToggle } from '@/components/mode-toggle'
-import { ModalProvider } from '@/components/providers/modal-profider'
+import { ModalProvider } from '@/components/providers/modal-provider'
 const openSans = Open_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-    title: 'Team chat application',
+    title: 'Discodo',
     description: 'Team chat application',
 }
 
