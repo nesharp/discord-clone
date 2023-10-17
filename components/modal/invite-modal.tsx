@@ -15,7 +15,6 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Check, Copy, RefreshCw } from 'lucide-react'
-import { link } from 'fs'
 import { useOrigin } from '@/hooks/useOrigin'
 import axios from 'axios'
 

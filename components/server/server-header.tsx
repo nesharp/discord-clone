@@ -53,7 +53,13 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
                     )}
                     {/* checking if admin and getting access to admin panel */}
                     {isAdmin && (
-                        <DropdownMenuItem className="focus:outline-none px-3 py-2 text-sm cursor-pointer flex items-center">
+                        <DropdownMenuItem
+                            onClick={() => {
+                                console.log(server)
+                                onOpen('editServer', { server })
+                            }}
+                            className="3:outline-none px-3 py-2 text-sm cursor-pointer flex items-center"
+                        >
                             Server settings
                             <Settings className="h-4 w-4 ml-auto" />
                         </DropdownMenuItem>
