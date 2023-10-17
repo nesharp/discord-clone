@@ -3,13 +3,11 @@ generator clien {
 }
 
 datasource db {
+    provider = "postgresql"
 
-  provider = "postgresql"
+    url = env("POSTGRES_PRISMA_URL") // uses connection pooling
 
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
-
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
-
+    directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 model Profile {
@@ -30,14 +28,14 @@ model Server {
     id         String  @id @default(uuid())
     name       String
     imageUrl   String  @db.Text()
-    inviteCode String  @db.Text()
+    inviteCode String  @unique
     profileId  String
     profile    Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    members    Member[]
-    chanels    Chanel[]
+    members   Member[]
+    chanels   Chanel[]
 
     @@index([profileId])
 }
