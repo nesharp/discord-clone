@@ -17,6 +17,7 @@ import { Button } from '@/components/ui/button'
 import { Check, Copy, RefreshCw } from 'lucide-react'
 import { useOrigin } from '@/hooks/useOrigin'
 import axios from 'axios'
+import { on } from 'events'
 
 export const InviteModal = () => {
     const { isOpen, onClose, onOpen, type, data } = useModal()
@@ -24,9 +25,8 @@ export const InviteModal = () => {
     const origin = useOrigin()
     // router
     const router = useRouter()
-
     const isModalOpen = isOpen && type === 'invite'
-    const inviteUrl = `${origin}/invite/server/${server?.inviteCode}`
+    const inviteUrl = `${origin}/invite/${server?.inviteCode}`
     const [copied, setCopied] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const onCopy = () => {
@@ -42,8 +42,9 @@ export const InviteModal = () => {
         try {
             setIsLoading(true)
             const response = await axios.patch(
-                `/api/servers/${server?.id}/invite-codes`
+                `/api/servers/${server?.id}/invite-code`
             )
+            onOpen('invite', { server: response.data })
         } catch (err) {
             console.log(err)
         } finally {
@@ -73,10 +74,15 @@ export const InviteModal = () => {
                         </Label>
                         <div className="flex items-center mt-2 gap-x-2">
                             <Input
+                                disabled={isLoading}
                                 className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0 focus:outline-none"
                                 value={inviteUrl}
                             />
-                            <Button size="icon" onClick={() => onCopy()}>
+                            <Button
+                                disabled={isLoading}
+                                size="icon"
+                                onClick={() => onCopy()}
+                            >
                                 {copied ? (
                                     <Check />
                                 ) : (
@@ -85,9 +91,11 @@ export const InviteModal = () => {
                             </Button>
                         </div>
                         <Button
+                            disabled={isLoading}
                             variant={'link'}
                             size={'sm'}
                             className="text-xs text-zinc-500 mt-4"
+                            onClick={() => onNew()}
                         >
                             Generate a new link
                             <RefreshCw className="h-4 w-4 ml-2" />

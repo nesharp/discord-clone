@@ -1,5 +1,4 @@
 import { Server } from '@prisma/client'
-import { on } from 'events'
 import { create } from 'zustand'
 
 export type modalType = 'createServer' | 'invite' | 'editServer'
@@ -18,6 +17,6 @@ export const useModal = create<ModalStore>((set) => ({
     type: null,
     isOpen: false,
     data: {},
-    onOpen: (type, data = {}) => set({ type, isOpen: true, data }),
+    onOpen: (type, data = {}) => set({ type, isOpen: true }),
     onClose: () => set({ isOpen: false, type: null }),
 }))
