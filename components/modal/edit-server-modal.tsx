@@ -67,7 +67,6 @@ export const EditServerModal = () => {
         onClose()
     }
     useEffect(() => {
-        console.log(server)
         if (server) {
             form.setValue('name', server.name)
             form.setValue('imageUrl', server.imageUrl)
