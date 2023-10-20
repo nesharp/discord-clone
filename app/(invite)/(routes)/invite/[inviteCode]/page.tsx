@@ -1,6 +1,7 @@
 import { currentProfile } from '@/lib/current-profile'
 import { db } from '@/lib/db'
 import { redirectToSignIn } from '@clerk/nextjs'
+import { NextPage } from 'next'
 import { redirect } from 'next/navigation'
 
 interface Props {
@@ -8,22 +9,24 @@ interface Props {
         inviteCode: string
     }
 }
-export default async ({ params }: Props) => {
-    const { inviteCode } = params
+async function Page({ params }: Props) {
+    const inviteCode = await params.inviteCode
     const profile = await currentProfile()
     if (!profile) return redirectToSignIn()
     if (!inviteCode) return redirect('/')
 
-    const existingServer = await db.server.findFirst({
-        where: {
-            inviteCode,
-            members: {
-                some: {
-                    profileId: profile.id,
+    const existingServer = await db.server
+        .findFirst({
+            where: {
+                inviteCode,
+                members: {
+                    some: {
+                        profileId: profile.id,
+                    },
                 },
             },
-        },
-    }).catch(() => null)
+        })
+        .catch(() => null)
     if (existingServer) return redirect(`/servers/${existingServer.id}`)
 
     const server = await db.server.update({
@@ -44,3 +47,4 @@ export default async ({ params }: Props) => {
 
     return <div>{inviteCode}</div>
 }
+export default Page

@@ -4,8 +4,7 @@ import { db } from '@/lib/db'
 import { redirectToSignIn } from '@clerk/nextjs'
 import { redirect } from 'next/navigation'
 import { ReactNode } from 'react'
-
-export default async ({
+const Layout = async ({
     children,
     params,
 }: {
@@ -38,3 +37,4 @@ export default async ({
         </div>
     )
 }
+export default Layout
