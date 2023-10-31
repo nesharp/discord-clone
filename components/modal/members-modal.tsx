@@ -34,11 +34,9 @@ import {
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { DropdownMenuSeparator } from '@radix-ui/react-dropdown-menu'
+import { DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
 import { MemberRole } from '@prisma/client'
 import axios from 'axios'
-import { NextResponse } from 'next/server'
-import { set } from 'zod'
 
 export const MembersModal = () => {
     const { isOpen, onClose, onOpen, type, data } = useModal()

@@ -20,7 +20,7 @@ import {
 import {
     DropdownMenuContent,
     DropdownMenuItem,
-} from '@radix-ui/react-dropdown-menu'
+} from '@/components/ui/dropdown-menu'
 import { useModal } from '@/hooks/use-modal-store'
 interface ServerHeaderProps {
     server: ServerWithMembersWithProfiles
@@ -77,7 +77,12 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
                         </DropdownMenuItem>
                     )}
                     {isModerator && (
-                        <DropdownMenuItem className="focus:outline-none px-3 py-2 text-sm cursor-pointer flex items-center">
+                        <DropdownMenuItem
+                            onClick={() => {
+                                onOpen('createChanel', { server })
+                            }}
+                            className="focus:outline-none px-3 py-2 text-sm cursor-pointer flex items-center"
+                        >
                             Create chanel
                             <PlusCircle className="h-4 w-4 ml-auto" />
                         </DropdownMenuItem>
@@ -90,8 +95,13 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
                         </DropdownMenuItem>
                     )}
                     {!isAdmin && (
-                        <DropdownMenuItem className=" text-rose-500 focus:outline-none px-3 py-2 text-sm cursor-pointer flex items-center">
-                            Log out
+                        <DropdownMenuItem
+                            onClick={() => {
+                                onOpen('leaveServer', { server })
+                            }}
+                            className=" text-rose-500 focus:outline-none px-3 py-2 text-sm cursor-pointer flex items-center"
+                        >
+                            Leave server
                             <LogOut className="h-4 w-4 ml-auto" />
                         </DropdownMenuItem>
                     )}

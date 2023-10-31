@@ -14,7 +14,7 @@ export const POST = async (req: Request) => {
                 name,
                 imageUrl,
                 inviteCode: uuidv4(),
-                chanels: {
+                channels: {
                     create: [
                         {
                             name: 'general',

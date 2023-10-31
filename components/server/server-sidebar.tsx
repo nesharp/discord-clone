@@ -21,7 +21,7 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
             id: serverId,
         },
         include: {
-            chanels: {
+            channels: {
                 orderBy: {
                     createdAt: 'asc',
                 },
@@ -38,13 +38,13 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
     })
     if (!server) return redirect('/')
     // filtering chanels
-    const textChannels = server?.chanels.filter(
+    const textChannels = server?.channels.filter(
         (chanel) => chanel.type === ChanelType.TEXT
     )
-    const audioChanels = server?.chanels.filter(
+    const audioChanels = server?.channels.filter(
         (channel) => channel.type === ChanelType.AUDIO
     )
-    const videoChanels = server?.chanels.filter((channel) => {
+    const videoChanels = server?.channels.filter((channel) => {
         return channel.type === ChanelType.VIDEO
     })
     const members = server?.members.filter(

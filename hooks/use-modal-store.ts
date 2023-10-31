@@ -1,8 +1,13 @@
 import { ServerWithMembersWithProfiles } from '@/types'
-import { Member, Server } from '@prisma/client'
 import { create } from 'zustand'
 
-export type modalType = 'createServer' | 'invite' | 'editServer' | 'members'
+export type modalType =
+    | 'createServer'
+    | 'invite'
+    | 'editServer'
+    | 'members'
+    | 'createChanel'
+    | 'leaveServer'
 interface ModalStore {
     type: modalType | null
     isOpen: boolean
