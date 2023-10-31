@@ -8,6 +8,7 @@ export type modalType =
     | 'members'
     | 'createChanel'
     | 'leaveServer'
+    | 'deleteServer'
 interface ModalStore {
     type: modalType | null
     isOpen: boolean

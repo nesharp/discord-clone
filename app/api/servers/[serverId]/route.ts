@@ -2,10 +2,10 @@ import { currentProfile } from '@/lib/current-profile'
 import { db } from '@/lib/db'
 import { NextResponse } from 'next/server'
 
-export const PATCH = async (
+export async function PATCH(
     req: Request,
     { params }: { params: { serverId: string } }
-) => {
+) {
     try {
         console.log(params.serverId)
         const profile = await currentProfile()
@@ -25,5 +25,23 @@ export const PATCH = async (
     } catch (error) {
         console.log(error)
         return new NextResponse('Error to change invite code', { status: 500 })
+    }
+}
+export async function DELETE(
+    req: Request,
+    { params }: { params: { serverId: string } }
+) {
+    try {
+        const profile = await currentProfile()
+        if (!profile) return new NextResponse('Unauthorized', { status: 401 })
+        const server = await db.server.delete({
+            where: {
+                id: params.serverId,
+                profileId: profile.id,
+            },
+        })
+        return NextResponse.json(server)
+    } catch {
+        return new NextResponse('Internal server error', { status: 500 })
     }
 }
