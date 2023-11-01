@@ -139,8 +139,8 @@ export const CreateChanelModal = () => {
 
                                                 <Select
                                                     disabled={isLoading}
-                                                    onValueChange={() => {
-                                                        field.onChange
+                                                    onValueChange={(value) => {
+                                                        field.onChange(value)
                                                     }}
                                                     defaultValue={field.value}
                                                 >
@@ -173,6 +173,7 @@ export const CreateChanelModal = () => {
                                 <Button
                                     variant="primary"
                                     className="px-3 text-white"
+                                    disabled={isLoading}
                                 >
                                     Create
                                 </Button>
