@@ -9,6 +9,9 @@ import { ServerWithMembersWithProfiles } from '@/types'
 import { ScrollArea } from '../ui/scroll-area'
 import { ServerSearch } from './server-search'
 import { Hash, Mic, ShieldAlert, ShieldCheck, Video } from 'lucide-react'
+import { Separator } from '../ui/separator'
+import { text } from 'stream/consumers'
+import { ServerSection } from './server-section'
 
 interface ServerSidebarProps {
     serverId: string
@@ -24,9 +27,7 @@ const roleIconMap = {
     [MemberRole.MODERATOR]: (
         <ShieldCheck className="h-4 w-4 mr-2 text-indigo-500" />
     ),
-    [MemberRole.ADMIN]: (
-        <ShieldAlert className="h-4 w-4 mr-2 text-rose-500" />
-    ),
+    [MemberRole.ADMIN]: <ShieldAlert className="h-4 w-4 mr-2 text-rose-500" />,
 }
 export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
     // getting profile
@@ -118,6 +119,12 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
                         ]}
                     />
                 </div>
+                <Separator className="bg-zing-200 dark:bg-zinc-700 rounded-md my-2" />
+                {!!textChannels.length && (
+                    <div className="mb-2">
+                        <ServerSection></ServerSection>
+                    </div>
+                )}
             </ScrollArea>
         </div>
     )
