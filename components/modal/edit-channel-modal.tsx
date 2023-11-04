@@ -43,41 +43,41 @@ const formSchema = z.object({
         }),
     type: z.nativeEnum(ChannelType),
 })
-export const CreateChannelModal = () => {
+export const EditChannelModal = () => {
     const { isOpen, onClose, onOpen, type, data } = useModal()
-    const { channelType } = data
+    const { channel, server } = data
     // router
     const router = useRouter()
-    const params = useParams()
-    const isModalOpen = isOpen && type === 'createChannel'
+    const isModalOpen = isOpen && type === 'editChannel'
 
     // form layout
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: '',
-            type: channelType || ChannelType.TEXT,
+            type: channel?.type || ChannelType.TEXT,
         },
     })
     useEffect(() => {
-        if (channelType) {
-            form.setValue('type', channelType)
-        } else {
-            form.setValue('type', ChannelType.TEXT)
+        if (channel) {
+            form.reset({
+                name: channel.name,
+                type: channel.type,
+            })
         }
-    }, [channelType, form])
+    }, [channel, form])
     // loading state
     const isLoading = form.formState.isSubmitting
     // submit function
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             const url = qs.stringifyUrl({
-                url: '/api/channels',
+                url: `/api/channels/${channel?.id}`,
                 query: {
-                    serverId: params.slug,
+                    serverId: server?.id,
                 },
             })
-            await axios.post(url, values)
+            await axios.patch(url, values)
             form.reset()
             router.refresh()
             window.location.reload()
@@ -97,9 +97,17 @@ export const CreateChannelModal = () => {
             <Dialog open={isModalOpen} onOpenChange={handleClose}>
                 <DialogContent className="bg-white text-black pt-1  overflow-hidden ">
                     <DialogHeader className="pt-8 px-6">
-                        <DialogTitle className="text-center text-lg">
-                            Create channel
+                        <DialogTitle className="text-center">
+                            Edit channel
                         </DialogTitle>
+                        <DialogDescription className="px-6">
+                            <div>
+                                <p className="text-center">
+                                    You can change your server name and icon
+                                    later.
+                                </p>
+                            </div>
+                        </DialogDescription>
                     </DialogHeader>
                     <FormProvider {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -174,7 +182,7 @@ export const CreateChannelModal = () => {
                                     className="px-3 text-white"
                                     disabled={isLoading}
                                 >
-                                    Create
+                                    Save
                                 </Button>
                             </DialogFooter>
                         </form>

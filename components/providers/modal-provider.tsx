@@ -9,6 +9,7 @@ import { LeaveServerModal } from '../modal/leave-server-modal'
 import { Delete } from 'lucide-react'
 import { DeleteServerModal } from '../modal/delete-server-modal'
 import { DeleteChannelModal } from '../modal/delete-channel-modal'
+import { EditChannelModal } from '../modal/edit-channel-modal'
 
 export const ModalProvider = () => {
     const [isMounted, setIsMounted] = useState(false)
@@ -27,6 +28,7 @@ export const ModalProvider = () => {
             <LeaveServerModal />
             <DeleteServerModal />
             <DeleteChannelModal />
+            <EditChannelModal />
         </>
     )
 }

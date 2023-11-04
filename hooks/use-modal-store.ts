@@ -11,6 +11,7 @@ export type modalType =
     | 'leaveServer'
     | 'deleteServer'
     | 'deleteChannel'
+    | 'editChannel'
 interface ModalStore {
     type: modalType | null
     isOpen: boolean

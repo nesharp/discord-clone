@@ -1,13 +1,14 @@
 'use client'
 import { cn } from '@/lib/utils'
-import { Channel, ChannelType, MemberRole, Server } from '@prisma/client'
+import { Channel, ChannelType, MemberRole } from '@prisma/client'
 import { Edit, Hash, Lock, Mic, Trash, Video } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 import { ActionTooltip } from '../ui/action-tooltip'
 import { useModal } from '@/hooks/use-modal-store'
+import { ServerWithMembersWithProfiles } from '@/types'
 interface ServerChannelProps {
     channel: Channel
-    server: Server
+    server: ServerWithMembersWithProfiles
     role?: MemberRole
 }
 const iconMap = {
@@ -28,7 +29,7 @@ export const ServerChannel = ({
         <div
             onClick={() => {}}
             className={cn(
-                'flex group p-2 rounded-md items-center gap-x-2 w-full hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 transition mb-1',
+                'flex group p-2 rounded-md items-center gap-x-2 w-full hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 transition mb-1 cursor-pointer',
                 params.channelId === channel.id &&
                     'bg-zinc-700/20 dark:bg-zinc-700'
             )}
@@ -46,7 +47,12 @@ export const ServerChannel = ({
             {channel.name !== 'general' && role !== MemberRole.GUEST && (
                 <div className="ml-auto flex items-center gap-x-2">
                     <ActionTooltip label="Edit">
-                        <Edit className="h-4 w-4 hidden group-hover:block text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition" />
+                        <Edit
+                            onClick={() => {
+                                onOpen('editChannel', { server, channel })
+                            }}
+                            className="h-4 w-4 hidden group-hover:block text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition"
+                        />
                     </ActionTooltip>
                     <ActionTooltip label="Delete">
                         <Trash
