@@ -11,17 +11,17 @@ datasource db {
 }
 
 model Profile {
-    id        String   @id @default(uuid())
-    userId    String   @unique
+    id        String    @id @default(uuid())
+    userId    String    @unique
     name      String
-    email     String   @db.Text()
-    imageUrl  String   @db.Text()
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    email     String    @db.Text()
+    imageUrl  String    @db.Text()
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
     serverId  String?
     server    Server[]
     member    Member[]
-    Chanel    Chanel[]
+    Channel   Channel[]
 }
 
 model Server {
@@ -32,10 +32,10 @@ model Server {
     profileId  String
     profile    Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
     members   Member[]
-    channels   Chanel[]
+    channels  Channel[]
 
     @@index([profileId])
 }
@@ -55,16 +55,16 @@ model Member {
     @@index([serverId])
 }
 
-model Chanel {
-    id        String     @id @default(uuid())
+model Channel {
+    id        String      @id @default(uuid())
     name      String
-    type      ChanelType @default(TEXT)
+    type      ChannelType @default(TEXT)
     profileId String
-    profile   Profile    @relation(fields: [profileId], references: [id], onDelete: Cascade)
+    profile   Profile     @relation(fields: [profileId], references: [id], onDelete: Cascade)
     serverId  String
-    server    Server     @relation(fields: [serverId], references: [id], onDelete: Cascade)
-    createdAt DateTime   @default(now())
-    updatedAt DateTime   @updatedAt
+    server    Server      @relation(fields: [serverId], references: [id], onDelete: Cascade)
+    createdAt DateTime    @default(now())
+    updatedAt DateTime    @updatedAt
 }
 
 enum MemberRole {
@@ -73,7 +73,7 @@ enum MemberRole {
     GUEST
 }
 
-enum ChanelType {
+enum ChannelType {
     TEXT
     AUDIO
     VIDEO

@@ -1,4 +1,5 @@
 import { ServerWithMembersWithProfiles } from '@/types'
+import { Channel, ChannelType } from '@prisma/client'
 import { create } from 'zustand'
 
 export type modalType =
@@ -6,9 +7,10 @@ export type modalType =
     | 'invite'
     | 'editServer'
     | 'members'
-    | 'createChanel'
+    | 'createChannel'
     | 'leaveServer'
     | 'deleteServer'
+    | 'deleteChannel'
 interface ModalStore {
     type: modalType | null
     isOpen: boolean
@@ -18,6 +20,8 @@ interface ModalStore {
 }
 interface ModalData {
     server?: ServerWithMembersWithProfiles
+    channel?: Channel
+    channelType?: ChannelType
 }
 
 export const useModal = create<ModalStore>((set) => ({

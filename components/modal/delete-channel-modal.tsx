@@ -8,28 +8,34 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog'
-
+import qs from 'query-string'
 import React, { useState } from 'react'
 import { useModal } from '@/hooks/use-modal-store'
 
 import axios from 'axios'
 import { Button } from '../ui/button'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 
-export const DeleteServerModal = () => {
+export const DeleteChannelModal = () => {
     const { isOpen, onClose, type, data } = useModal()
     const router = useRouter()
-    const { server } = data
-    const isModalOpen = isOpen && type === 'deleteServer'
+    const { channel } = data
+    const isModalOpen = isOpen && type === 'deleteChannel'
     const [isLoading, setIsLoading] = useState(false)
 
     const onClick = async () => {
         try {
             setIsLoading(true)
-            await axios.delete(`/api/servers/${server?.id}`)
-            router.replace(`/servers/servers/${server?.id}`)
-            router.refresh()
+            const url = qs.stringifyUrl({
+                url: `/api/channels/${channel?.id}`,
+                query: {
+                    serverId: channel?.serverId,
+                },
+            })
+            await axios.delete(url)
             onClose()
+            router.refresh()
+            router.push(`/servers/${channel?.serverId}}`)
         } catch (err) {
             console.log(err)
         } finally {
@@ -42,16 +48,16 @@ export const DeleteServerModal = () => {
                 <DialogContent className="bg-white text-black  overflow-hidden p-0 pt-1">
                     <DialogHeader className="pt-8 px-6">
                         <DialogTitle className="text-center">
-                            Delete server
+                            Delete channel
                         </DialogTitle>
                         <DialogDescription className="px-6">
                             <div>
                                 <p className="text-center text-zinc-500">
                                     Are you sure you want to do this?
                                     <br />
-                                    Server{' '}
+                                    Channel{' '}
                                     <span className="font-semibold text-indigo-500">
-                                        {server?.name}{' '}
+                                        #{channel?.name}{' '}
                                     </span>
                                     will be deleted and you will lose all data.
                                 </p>

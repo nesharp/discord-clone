@@ -21,10 +21,10 @@ import {
     FormLabel,
     FormMessage,
 } from '@/components/ui/form'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { useModal } from '@/hooks/use-modal-store'
-import { ChanelType } from '@prisma/client'
+import { ChannelType } from '@prisma/client'
 import {
     Select,
     SelectContent,
@@ -39,25 +39,33 @@ const formSchema = z.object({
             message: 'Server name must be at least 2 characters long',
         })
         .refine((name) => name !== 'general', {
-            message: "Chanel name cannot be 'general'",
+            message: "Channel name cannot be 'general'",
         }),
-    type: z.nativeEnum(ChanelType),
+    type: z.nativeEnum(ChannelType),
 })
-export const CreateChanelModal = () => {
-    const { isOpen, onClose, onOpen, type } = useModal()
+export const CreateChannelModal = () => {
+    const { isOpen, onClose, onOpen, type, data } = useModal()
+    const { channelType } = data
     // router
     const router = useRouter()
     const params = useParams()
-    const isModalOpen = isOpen && type === 'createChanel'
+    const isModalOpen = isOpen && type === 'createChannel'
 
     // form layout
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: '',
-            type: ChanelType.TEXT,
+            type: channelType || ChannelType.TEXT,
         },
     })
+    useEffect(() => {
+        if (channelType) {
+            form.setValue('type', channelType)
+        } else {
+            form.setValue('type', ChannelType.TEXT)
+        }
+    }, [channelType, form])
     // loading state
     const isLoading = form.formState.isSubmitting
     // submit function
@@ -69,7 +77,6 @@ export const CreateChanelModal = () => {
                     serverId: params.slug,
                 },
             })
-            console.log(params)
             await axios.post(url, values)
             form.reset()
             router.refresh()
@@ -112,12 +119,12 @@ export const CreateChanelModal = () => {
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel>
-                                                    Chanel Name
+                                                    Channel Name
                                                 </FormLabel>
                                                 <FormControl>
                                                     <Input
                                                         disabled={isLoading}
-                                                        placeholder="Enter chanel name"
+                                                        placeholder="Enter Channel name"
                                                         className="outline-0 outline-offset-0   bg-gray-200 border-0"
                                                         {...field}
                                                     />
@@ -134,7 +141,7 @@ export const CreateChanelModal = () => {
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel>
-                                                    Chanel type
+                                                    Channel type
                                                 </FormLabel>
 
                                                 <Select
@@ -146,12 +153,12 @@ export const CreateChanelModal = () => {
                                                 >
                                                     <FormControl>
                                                         <SelectTrigger className="bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none">
-                                                            <SelectValue placeholder="Select chanel type" />
+                                                            <SelectValue placeholder="Select Channel type" />
                                                         </SelectTrigger>
                                                     </FormControl>
                                                     <SelectContent>
                                                         {Object.values(
-                                                            ChanelType
+                                                            ChannelType
                                                         ).map((type) => (
                                                             <SelectItem
                                                                 key={type}
