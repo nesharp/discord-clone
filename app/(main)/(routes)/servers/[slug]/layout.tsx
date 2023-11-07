@@ -29,11 +29,11 @@ const Layout = async ({
     })
     if (!server) return redirect('/')
     return (
-        <div className="h-full flex">
+        <div className="h-full w-full flex">
             <div className="hidden md:flex h-full w-60 z-20 flex-col fixed inset-y-0 ">
                 <ServerSidebar serverId={server.id} />
             </div>
-            <main className="h-full md:pl-60">{children}</main>
+            <main className="h-full w-full md:pl-60 bg-white dark:bg-[#313338]">{children}</main>
         </div>
     )
 }

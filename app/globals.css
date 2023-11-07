@@ -2,11 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body,
-:root{
-  min-height: 100%;
-}
+
 
 
 @layer base {
@@ -72,7 +68,6 @@ body,
     --ring: 24 5.7% 82.9%;
   }
 }
- 
 @layer base {
   * {
     @apply border-border;
@@ -81,4 +76,5 @@ body,
     @apply bg-background text-foreground;
   }
 }
+
 @import "~@uploadthing/react/styles.css";
