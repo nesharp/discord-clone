@@ -10,6 +10,7 @@ import qs from 'query-string'
 import { useModal } from '@/hooks/use-modal-store'
 import { EmojiPicker } from '../emoji-picker'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 interface ChatInputProps {
     apiUrl: string
     query: Record<string, any>
