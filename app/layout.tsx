@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils'
 import * as React from 'react'
 import { ModalProvider } from '@/components/providers/modal-provider'
 import { SocketProvider } from '@/components/providers/socket-provider'
+import { QueryProvider } from '@/components/providers/query-provider'
 const openSans = Open_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -31,10 +32,12 @@ export default function RootLayout({
                         enableSystem={false}
                         storageKey="discodo-theme"
                     >
-                        <SocketProvider>
-                            <ModalProvider />
-                            {children}
-                        </SocketProvider>
+                        <QueryProvider>
+                            <SocketProvider>
+                                <ModalProvider />
+                                {children}
+                            </SocketProvider>
+                        </QueryProvider>
                     </ThemeProvider>
                 </ClerkProvider>
             </body>

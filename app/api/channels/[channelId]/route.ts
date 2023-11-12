@@ -55,7 +55,6 @@ export const PATCH = async (
         const { name, type } = await req.json()
         if (name === 'general')
             return new NextResponse('Name can`t be "general"', { status: 400 })
-        console.log(name, type)
         const server = await db.server.update({
             where: {
                 id: serverId,

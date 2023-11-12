@@ -1,4 +1,6 @@
 import { ChatHeader } from '@/components/chat/chat-header'
+import { ChatInput } from '@/components/chat/chat-input'
+import { ChatMessages } from '@/components/chat/chat-messages'
 import { getConversation } from '@/lib/conversation'
 import { currentProfile } from '@/lib/current-profile'
 import { db } from '@/lib/db'
@@ -31,7 +33,6 @@ export default async function Page({ params }: MemberIdPageProps) {
     if (!conversation) return redirect(`/servers/${params.slug}`)
     const { memberOne, memberTwo } = conversation
     const otherMember = memberOne.id === profile.id ? memberTwo : memberOne
-    console.log(params)
     return (
         <div className="bg-white dark:bg-[#313338] h-full w-full flex flex-col">
             <ChatHeader
@@ -40,6 +41,8 @@ export default async function Page({ params }: MemberIdPageProps) {
                 serverId={params.slug}
                 type="conversation"
             />
+            {/* <ChatInput  />
+            <ChatMessages /> */}
         </div>
     )
 }
