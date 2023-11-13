@@ -13,6 +13,7 @@ export type modalType =
     | 'deleteChannel'
     | 'editChannel'
     | 'messageFile'
+    | 'deleteMessage'
 interface ModalStore {
     type: modalType | null
     isOpen: boolean
