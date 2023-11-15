@@ -26,7 +26,7 @@ export const ServerChannel = ({
     const Icon = iconMap[channel.type]
     const { onOpen } = useModal()
     const onClick = () => {
-        router.push(`/servers/${params.slug}/channels/${channel.id}`)
+        router.push(`/servers/${params?.slug}/channels/${channel.id}`)
     }
     const onAction = (e: React.MouseEvent, action: modalType) => {
         e.stopPropagation()
@@ -39,7 +39,7 @@ export const ServerChannel = ({
             }}
             className={cn(
                 'flex group p-2 rounded-md items-center gap-x-2 w-full hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 transition mb-1 cursor-pointer',
-                params.channelId === channel.id &&
+                params?.channelId === channel.id &&
                     'bg-zinc-700/20 dark:bg-zinc-700'
             )}
         >
@@ -47,7 +47,7 @@ export const ServerChannel = ({
             <p
                 className={cn(
                     'line-clamp-1 font-semibold text-sm text-zinc-500 group-hover:text-zinc-500 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition',
-                    params.channelId === channel.id &&
+                    params?.channelId === channel.id &&
                         'text-primary dark:text-zinc-200 dark:group-hover:text-white'
                 )}
             >
