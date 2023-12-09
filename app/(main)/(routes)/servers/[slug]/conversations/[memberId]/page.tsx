@@ -32,7 +32,8 @@ export default async function Page({ params }: MemberIdPageProps) {
     )
     if (!conversation) return redirect(`/servers/${params.slug}`)
     const { memberOne, memberTwo } = conversation
-    const otherMember = memberOne.id === profile.id ? memberTwo : memberOne
+    const otherMember = memberOne.id !== profile.id ? memberTwo : memberOne
+
     return (
         <div className="bg-white dark:bg-[#313338] h-full w-full flex flex-col">
             <ChatHeader
